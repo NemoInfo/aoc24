@@ -6,8 +6,7 @@ file = open("input.txt", "r")
 #           PART 1            #
 ###############*###############
 nums = np.array([[*map(int,
-                       line.strip().split("   "))]
-                 for line in file.readlines()])
+                       line.strip().split())] for line in file.readlines()])
 snums = np.sort(nums, axis=0)
 res1 = abs(snums[:, 0] - snums[:, 1]).sum()
 
