@@ -1,38 +1,33 @@
 import numpy as np
 
 file = open("input.txt", "r")
-ws = [line.strip() for line in file.readlines()]
+ws = np.array([list(line.strip()) for line in file.readlines()])
 
 ###############*###############
 #           PART 1            #
 ###############*###############
-ws = np.array([list(row) for row in ws])
-# line
+dijs = np.array([[-1] * 3 + [0] * 3 + [1] * 3, [-1, 0, 1] * 3]).T
 res1 = 0
-for row in ws:
-  row = "".join(row)
-  res1 += row.count("XMAS") + row.count("SAMX")
 
-for row in ws.T:
-  row = "".join(row)
-  res1 += row.count("XMAS") + row.count("SAMX")
-
-for offset in range(-ws.shape[0] + 1, ws.shape[1]):
-  row = "".join(ws.diagonal(offset=offset))
-  res1 += row.count("XMAS") + row.count("SAMX")
-
-for offset in range(-ws.shape[0] + 1, ws.shape[1]):
-  row = "".join(np.fliplr(ws).diagonal(offset=offset))
-  res1 += row.count("XMAS") + row.count("SAMX")
+for ij in np.argwhere(ws == "X"):
+  for dij in dijs:
+    nij = ij + dij
+    for c in "MAS":
+      if np.any(nij >= ws.shape) or np.any(nij < 0) or ws[*nij] != c:
+        break
+      nij += dij
+    else:
+      res1 += 1
 
 print(f"Part 1: {res1}")
+
 ###############*###############
 #           PART 2            #
 ###############*###############
 kern = np.array([list(l) for l in ["M.S", ".A.", "M.S"]])
-
-res2 = 0
 windows = []
+res2 = 0
+
 for i in range(ws.shape[0] - kern.shape[0] + 1):
   for j in range(ws.shape[1] - kern.shape[1] + 1):
     window = ws[i:i + 3, j:j + 3].copy()
