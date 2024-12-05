@@ -28,11 +28,10 @@ kern = np.array([list(l) for l in ["M.S", ".A.", "M.S"]])
 windows = []
 res2 = 0
 
-for i in range(ws.shape[0] - kern.shape[0] + 1):
-  for j in range(ws.shape[1] - kern.shape[1] + 1):
-    window = ws[i:i + 3, j:j + 3].copy()
-    window[(0, 1, 1, 2), (1, 0, 2, 1)] = "."
-    windows += [window]
+for i, j in np.ndindex(*(np.array(ws.shape) - kern.shape + 1)):
+  window = ws[i:i + 3, j:j + 3].copy()
+  window[(0, 1, 1, 2), (1, 0, 2, 1)] = "."
+  windows += [window]
 
 windows = np.array(windows)
 
