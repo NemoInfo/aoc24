@@ -20,6 +20,7 @@ int main() {
     f1[a] += 1, f2[b] += 1;
     l1.push_back(a), l2.push_back(b);
   }
+  file.close();
 
   std::sort(l1.begin(), l1.end());
   std::sort(l2.begin(), l2.end());
