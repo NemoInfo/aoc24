@@ -11,6 +11,7 @@
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs.python312Packages; [
           python
+          tqdm
           numpy
           pandas
           matplotlib
