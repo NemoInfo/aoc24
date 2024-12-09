@@ -13,7 +13,7 @@ for ij, c in np.ndenumerate(grid):
   antenas[c] = antenas.get(c, []) + [np.array(ij)]
 
 antinodes = set()
-for k, ijs in antenas.items():
+for ijs in antenas.values():
   for p1, p2 in combinations(ijs, 2):
     dp = p1 - p2
     if all(p1 + dp >= 0) and all(p1 + dp < grid.shape):
