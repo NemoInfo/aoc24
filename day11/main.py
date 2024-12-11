@@ -26,5 +26,5 @@ print(f"Part 1: {res1}")
 #           PART 2            #
 ###############*###############
 
-res1 = sum(blink(stone, 75) for stone in stones)
-print(f"Part 2: {res1}")
+res2 = sum(blink(stone, 75) for stone in stones)
+print(f"Part 2: {res2}")
