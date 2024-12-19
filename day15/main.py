@@ -6,16 +6,17 @@ original_grid = [row.copy() for row in grid]
 decode_move = {">": (0, 1), "<": (0, -1), "v": (1, 0), "^": (-1, 0)}
 moves = list(map(lambda m: decode_move[m], moves.replace("\n", "")))
 
+count = lambda g, char: sum(100 * r + c for r, row in enumerate(g)
+                            for c, val in enumerate(row) if val == char)
+
 ###############*###############
 #           PART 1            #
 ###############*###############
-
 sr = sc = 0
 for sr, row in enumerate(grid):
   for sc, val in enumerate(row):
     if val == "@": break
-  else:
-    continue
+  else: continue
   break
 
 for dr, dc in moves:
@@ -31,32 +32,21 @@ for dr, dc in moves:
   sr, sc = nr, nc
   grid[sr][sc] = "@"
 
-res1 = 0
-for r, row in enumerate(grid):
-  for c, val in enumerate(row):
-    if val == "O": res1 += 100 * r + c
-
-print("\n".join(["".join(row) for row in grid]))
-print(f"Part 1: {res1}")
+print("\n".join(["".join(row) for row in grid]))  # show final grid
+print(f"Part 1: {count(grid, 'O')}")
 
 ###############*###############
 #           PART 2            #
 ###############*###############
 grid = original_grid
-
-grid = ["".join(line). \
-        replace(".", ".."). \
-        replace("#", "##"). \
-        replace("O", "[]"). \
-        replace("@", "@.") for line in grid]
-
-grid = [list(row) for row in grid]
+grid = [list("".join(line).replace(".", "..").replace("#", "##"). \
+                           replace("O", "[]").replace("@", "@."))
+        for line in grid]
 
 for sr, row in enumerate(grid):
   for sc, val in enumerate(row):
     if val == "@": break
-  else:
-    continue
+  else: continue
   break
 
 for dr, dc in moves:
@@ -82,11 +72,5 @@ for dr, dc in moves:
       grid[nr][nc] = "."
     sr, sc = sr + dr, sc + dc
 
-print("\n".join(["".join(row) for row in grid]))
-
-res2 = 0
-for r, row in enumerate(grid):
-  for c, val in enumerate(row):
-    if val == "[": res2 += 100 * r + c
-
-print(f"Part 2: {res2}")
+print("\n".join(["".join(row) for row in grid]))  # show final grid
+print(f"Part 2: {count(grid,'[')}")
