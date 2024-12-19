@@ -65,16 +65,16 @@ for dr, dc in moves:
   while i < len(targets):
     nr, nc = targets[i]
     char = grid[nr][nc]
+    if char == "#": break
     if char == ".":
       targets.pop(i)
       continue
-    if char == "#": break
+    if (nr + dr, nc + dc) not in targets:
+      targets += [(nr + dr, nc + dc)]
     if char == "[" and (nr, nc + 1) not in targets:
       targets += [(nr, nc + 1)]
     elif char == "]" and (nr, nc - 1) not in targets:
       targets += [(nr, nc - 1)]
-    if (nr + dr, nc + dc) not in targets:
-      targets += [(nr + dr, nc + dc)]
     i += 1
   else:
     while targets:
@@ -86,7 +86,7 @@ for dr, dc in moves:
 print("\n".join(["".join(row) for row in grid]))
 
 res2 = 0
-for r, row in enumerate(grid):
+for r, row in enumerate(grid): 
   for c, val in enumerate(row):
     if val == "[": res2 += 100 * r + c
 
